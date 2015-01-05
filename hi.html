@@ -1,0 +1,62 @@
+<script>
+	var correctAnswer = Math.floor(Math.random() * 100);
+	var numGuessesTaken = 0;
+	var gameCompleted = false;
+	alert("Using the clues below, guess the correct number, which is between 0 and 100")
+
+	function getFactors(number) {		// returns array of all factors of a number.  empty array denotes prime number
+		var factors = [];
+		if (number <= 3) {
+			return factors;
+		}
+		else  {
+			for (var i=2; i<=number/2; i++)  {
+				if(number%i == 0)	{
+					factors[factors.length]=i;
+				}
+			}
+			return factors;
+		}
+	}
+
+	function showHint(factors)	{    // takes array of factors and displays them to user
+		if(factors.length === 0)	{
+			alert("The number is prime.");
+		}
+		else {
+			var stringOfFactors = "";
+			for (var i=0; i<factors.length; i++) {
+				stringOfFactors += factors[i];
+				if(i<factors.length-1) {
+					stringOfFactors+=", ";
+				}
+			}
+			alert("The answer is divisible by " + stringOfFactors);
+		}
+	}
+
+	var factors = getFactors(correctAnswer);
+	showHint(factors);
+	var userGuess = prompt("Guess a number between 0 and 100");
+	while (!gameCompleted)	{
+		numGuessesTaken++;
+		if (userGuess == correctAnswer)	{
+			alert("You got it in " + numGuessesTaken + " tries!");
+			gameCompleted = true;
+		}
+		else if (userGuess === "hint")	{
+			showHint(factors);
+			userGuess = prompt("Guess a number between 0 and 100");
+		}
+		else if (userGuess === "quit")	{
+			gameCompleted = true;
+			alert("You gave up after " + numGuessesTaken + " tries.... loser.");
+		}
+		else {
+			alert("WRONG!  try again");
+			userGuess = prompt("Guess a number (type 'hint' to see hint again, or 'quit' to give up.)");
+		}
+	}
+
+
+</script>
